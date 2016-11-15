@@ -1,0 +1,457 @@
+Tytu³: nazwy produktów, które s¹ na stanie, kosztuj¹ mniej ni¿ 10 i nale¿¹ do kategorii Seafood
+Jednow¹tkowo: 0,33994
+Wielow¹tkowo: 0,5579
+
+Tytu³: Najtañsze i najdro¿sze produkty wg kategorii
+Jednow¹tkowo: 5,6834
+Wielow¹tkowo: 6,28288
+
+Tytu³: Cenê, dla której jest najwiêcej sztuk produktów
+Jednow¹tkowo: 7,38382
+Wielow¹tkowo: 14,20062
+
+Tytu³: Dla ka¿dego produktu podaæ liczbê produktów, które s¹ od niego tañsze lub jest ich mniej sztuk na sk³adzie
+Jednow¹tkowo: 2110,1742
+Wielow¹tkowo: 2058,46496
+
+Tytu³: Dla ka¿dego produktu podaj liczbê produktów, które kosztuj¹ tyle samo
+Jednow¹tkowo: 1181,89934
+Wielow¹tkowo: 1224,87428
+
+Tytu³: produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura - WYKLAD
+Jednow¹tkowo: 1449,92614
+Wielow¹tkowo: 1419,14278
+
+Tytu³: produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura
+Jednow¹tkowo: 0,65084
+Wielow¹tkowo: 0,40418
+
+Zapytania (mo¿na wyszukiwaæ u¿ywaj¹c tytu³ów przy czasach wykonywania):
+
+	[Category("Custom")]
+        [Title("nazwy produktów, które s¹ na stanie, kosztuj¹ mniej ni¿ 10 i nale¿¹ do kategorii Seafood")]
+        [Description("nazwy produktów, które s¹ na stanie, kosztuj¹ mniej ni¿ 10 i nale¿¹ do kategorii Seafood")]
+        public void Linq116()
+        {
+            List<Product> products = GetProductList();
+
+            var result = products
+                .Where(p => p.Category == "Seafood" && p.UnitPrice < 10 && p.UnitsInStock > 0)
+                .Select(p => new
+                {
+                    name = p.ProductName,
+                    category = p.Category,
+                    unitPrice = p.UnitPrice,
+                    inStock = p.UnitsInStock
+                });
+
+            foreach (var item in result)
+            {
+                Console.WriteLine("Product {0}, | Category {1}, | Price {2}, | InStock {3})", item.name, item.category, item.unitPrice, item.inStock);
+            }
+        }
+
+        [Category("Custom")]
+        [Title("Najtañsze i najdro¿sze produkty wg kategorii")]
+        [Description("Najtañsze i najdro¿sze produkty wg kategorii")]
+        public void Linq117()
+        {
+            List<Product> products = GetProductList();
+
+            var result = products.OrderBy(p => p.UnitPrice)
+                .GroupBy(p => p.Category)
+                .Select(p => new {
+                    category = p.Key,
+                    minPrice = p.First().UnitPrice,
+                    minProduct = p.First().ProductName,
+                    maxPrice = p.Last().UnitPrice,
+                    maxProduct = p.Last().ProductName
+
+                });                
+
+            foreach (var item in result)
+            {
+                Console.WriteLine("Category {0}, (Min: {1}, {2}), (Max: {3}, {4})", item.category, item.minProduct, item.minPrice, item.maxProduct, item.maxPrice);
+            }
+        }
+
+        [Category("Custom")]
+        [Title("Cenê, dla której jest najwiêcej sztuk produktów")]
+        [Description("Cenê, dla której jest najwiêcej sztuk produktów")]
+        public void Linq118()
+        {
+            List<Product> products = GetProductList();
+
+            var result = products
+                .GroupBy(p => p.UnitPrice)
+                .Select(p => new
+                {
+                    price = p.Key,
+                    units = p.Sum(x => x.UnitsInStock)
+                })
+                .OrderByDescending(p => p.units)
+                .Take(1);
+
+            Console.WriteLine("{0}", result);
+        }
+
+        [Category("Custom")]
+        [Title("Dla ka¿dego produktu podaæ liczbê produktów, które s¹ od niego tañsze lub jest ich mniej sztuk na sk³adzie")]
+        [Description("Dla ka¿dego produktu podaæ liczbê produktów, które s¹ od niego tañsze lub jest ich mniej sztuk na sk³adzie")]
+        public void Linq119()
+        {
+            List<Product> products = GetProductList();
+
+            var result = productList.Select(product => new
+            {
+                product = product,
+                counter = productList.Where(product2 => product.UnitPrice < product2.UnitPrice || product.UnitsInStock > product2.UnitsInStock).Count()
+            });
+
+
+            foreach (var item in result)
+            {
+                Console.WriteLine("Produkt: {0}, ilosc innych produktow tanszych lub o mniejszej ilosci sztuk: {1}", item.product.ProductName, item.counter);
+            }
+        }
+
+        [Category("Custom")]
+        [Title("Dla ka¿dego produktu podaj liczbê produktów, które kosztuj¹ tyle samo")]
+        [Description("Dla ka¿dego produktu podaj liczbê produktów, które kosztuj¹ tyle samo")]
+        public void Linq120()
+        {
+            List<Product> productList = GetProductList();
+            var result = productList.Select(product => new
+            {
+                product = product,
+                counter = productList.Where(product2 => product.UnitPrice == product2.UnitPrice).Count()
+            });
+
+            foreach (var item in result)
+            {
+                Console.WriteLine("Produkt {0}, ilosc produktow o takiej samej cenie: {1}", item.product.ProductName, item.counter);
+            }
+
+        }
+
+        [Category("Custom")]
+        [Title("produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura - WYKLAD")]
+        [Description("produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura - WYKLAD")]
+        public void Linq121()
+        {
+            List<Product> productList = GetProductList();
+            var result = productList
+                .Where(product => productList
+                   .Where(product2 => product2.ProductName == "Ikura")
+                   .Select(product2 => product2.UnitPrice).Contains(product.UnitPrice)
+                ).Select(product => product.ProductName);
+
+
+            foreach (var item in result)
+            {
+                Console.WriteLine("Produkt: {0}", item);
+            }
+
+        }
+
+        [Category("Custom")]
+        [Title("produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura")]
+        [Description("produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura")]
+        public void Linq122()
+        {
+            List<Product> productList = GetProductList();
+
+            var ikuraPrice = productList.Where(product2 => product2.ProductName == "Ikura").Select(product2 => product2.UnitPrice).ToList();
+
+            var result = productList
+                .Where(product => ikuraPrice.Contains(product.UnitPrice))
+                .Select(product => product.ProductName);
+
+            foreach (var item in result)
+            {
+                Console.WriteLine("Produkt: {0}", item);
+            }
+
+        }
+
+        [Category("Benchmark")]
+        [Title("nazwy produktów, które s¹ na stanie, kosztuj¹ mniej ni¿ 10 i nale¿¹ do kategorii Seafood")]
+        [Description("nazwy produktów, które s¹ na stanie, kosztuj¹ mniej ni¿ 10 i nale¿¹ do kategorii Seafood")]
+        public void Linq123()
+        {
+            List<Product> products = GetProductList();
+
+            Func<IEnumerable<dynamic>> func = () => products
+                .Where(p => p.Category == "Seafood" && p.UnitPrice < 10 && p.UnitsInStock > 0)
+                .Select(p => new
+                {
+                    name = p.ProductName,
+                    category = p.Category,
+                    unitPrice = p.UnitPrice,
+                    inStock = p.UnitsInStock
+                });
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+
+        }
+
+        [Category("Benchmark")]
+        [Title("Najtañsze i najdro¿sze produkty wg kategorii")]
+        [Description("Najtañsze i najdro¿sze produkty wg kategorii")]
+        public void Linq124()
+        {
+            List<Product> products = GetProductList();
+
+            Func<IEnumerable<dynamic>> func = () => products.OrderBy(p => p.UnitPrice)
+                .GroupBy(p => p.Category)
+                .Select(p => new
+                {
+                    category = p.Key,
+                    minPrice = p.First().UnitPrice,
+                    minProduct = p.First().ProductName,
+                    maxPrice = p.Last().UnitPrice,
+                    maxProduct = p.Last().ProductName
+
+                });
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+        }
+
+        [Category("Benchmark")]
+        [Title("Cenê, dla której jest najwiêcej sztuk produktów")]
+        [Description("Cenê, dla której jest najwiêcej sztuk produktów")]
+        public void Linq125()
+        {
+            List<Product> products = GetProductList();
+
+            Func<IEnumerable<dynamic>> func = () => products
+                .GroupBy(p => p.UnitPrice)
+                .Select(p => new
+                {
+                    price = p.Key,
+                    units = p.Sum(x => x.UnitsInStock)
+                })
+                .OrderByDescending(p => p.units)
+                .Take(1);
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+        }
+
+        [Category("Benchmark")]
+        [Title("Dla ka¿dego produktu podaæ liczbê produktów, które s¹ od niego tañsze lub jest ich mniej sztuk na sk³adzie")]
+        [Description("Dla ka¿dego produktu podaæ liczbê produktów, które s¹ od niego tañsze lub jest ich mniej sztuk na sk³adzie")]
+        public void Linq126()
+        {
+            List<Product> products = GetProductList();
+
+            Func<IEnumerable<dynamic>> func = () => productList.Select(product => new
+            {
+                product = product,
+                counter = productList.Where(product2 => product.UnitPrice < product2.UnitPrice || product.UnitsInStock > product2.UnitsInStock).Count()
+            });
+
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+        }
+
+        [Category("Benchmark")]
+        [Title("Dla ka¿dego produktu podaj liczbê produktów, które kosztuj¹ tyle samo")]
+        [Description("Dla ka¿dego produktu podaj liczbê produktów, które kosztuj¹ tyle samo")]
+        public void Linq127()
+        {
+            List<Product> productList = GetProductList();
+            Func<IEnumerable<dynamic>> func = () => productList.Select(product => new
+            {
+                product = product,
+                counter = productList.Where(product2 => product.UnitPrice == product2.UnitPrice).Count()
+            });
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+
+        }
+
+        [Category("Benchmark")]
+        [Title("produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura - WYKLAD")]
+        [Description("produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura - WYKLAD")]
+        public void Linq128()
+        {
+            List<Product> productList = GetProductList();
+            Func<IEnumerable<dynamic>> func = () => productList
+                .Where(product => productList
+                   .Where(product2 => product2.ProductName == "Ikura")
+                   .Select(product2 => product2.UnitPrice).Contains(product.UnitPrice)
+                ).Select(product => product.ProductName);
+
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+
+        }
+
+        [Category("Benchmark")]
+        [Title("produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura")]
+        [Description("produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura")]
+        public void Linq129()
+        {
+            List<Product> productList = GetProductList();
+            Func<IEnumerable<dynamic>> func = () =>
+            {
+                var ikuraPrice = productList.Where(product2 => product2.ProductName == "Ikura").Select(product2 => product2.UnitPrice).ToList();
+
+                return productList
+                    .Where(product => ikuraPrice.Contains(product.UnitPrice))
+                    .Select(product => product.ProductName);
+
+            };
+            double time = QuerySamples.Benchmark.getTimeOf(func);
+            Console.WriteLine("Time {0}", time);
+
+        }
+
+        [Category("Parallel")]
+        [Title("nazwy produktów, które s¹ na stanie, kosztuj¹ mniej ni¿ 10 i nale¿¹ do kategorii Seafood")]
+        [Description("nazwy produktów, które s¹ na stanie, kosztuj¹ mniej ni¿ 10 i nale¿¹ do kategorii Seafood")]
+        public void Linq130()
+        {
+            List<Product> products = GetProductList();
+
+            Func<IEnumerable<dynamic>> func = () => products.AsParallel()
+                .Where(p => p.Category == "Seafood" && p.UnitPrice < 10 && p.UnitsInStock > 0)
+                .Select(p => new
+                {
+                    name = p.ProductName,
+                    category = p.Category,
+                    unitPrice = p.UnitPrice,
+                    inStock = p.UnitsInStock
+                });
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+
+        }
+
+        [Category("Parallel")]
+        [Title("Najtañsze i najdro¿sze produkty wg kategorii")]
+        [Description("Najtañsze i najdro¿sze produkty wg kategorii")]
+        public void Linq131()
+        {
+            List<Product> products = GetProductList();
+
+            Func<IEnumerable<dynamic>> func = () => products.AsParallel()
+                .OrderBy(p => p.UnitPrice)
+                .GroupBy(p => p.Category)
+                .Select(p => new
+                {
+                    category = p.Key,
+                    minPrice = p.First().UnitPrice,
+                    minProduct = p.First().ProductName,
+                    maxPrice = p.Last().UnitPrice,
+                    maxProduct = p.Last().ProductName
+
+                });
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+        }
+
+        [Category("Parallel")]
+        [Title("Cenê, dla której jest najwiêcej sztuk produktów")]
+        [Description("Cenê, dla której jest najwiêcej sztuk produktów")]
+        public void Linq132()
+        {
+            List<Product> products = GetProductList();
+
+            Func<IEnumerable<dynamic>> func = () => products.AsParallel()
+                .GroupBy(p => p.UnitPrice)
+                .Select(p => new
+                {
+                    price = p.Key,
+                    units = p.Sum(x => x.UnitsInStock)
+                })
+                .OrderByDescending(p => p.units)
+                .Take(1);
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+        }
+
+        [Category("Parallel")]
+        [Title("Dla ka¿dego produktu podaæ liczbê produktów, które s¹ od niego tañsze lub jest ich mniej sztuk na sk³adzie")]
+        [Description("Dla ka¿dego produktu podaæ liczbê produktów, które s¹ od niego tañsze lub jest ich mniej sztuk na sk³adzie")]
+        public void Linq133()
+        {
+            List<Product> products = GetProductList();
+
+            Func<IEnumerable<dynamic>> func = () => productList.AsParallel()
+            .Select(product => new
+            {
+                product = product,
+                counter = productList.Where(product2 => product.UnitPrice < product2.UnitPrice || product.UnitsInStock > product2.UnitsInStock).Count()
+            });
+
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+        }
+
+        [Category("Parallel")]
+        [Title("Dla ka¿dego produktu podaj liczbê produktów, które kosztuj¹ tyle samo")]
+        [Description("Dla ka¿dego produktu podaj liczbê produktów, które kosztuj¹ tyle samo")]
+        public void Linq134()
+        {
+            List<Product> productList = GetProductList();
+            Func<IEnumerable<dynamic>> func = () => productList.AsParallel()
+            .Select(product => new
+            {
+                product = product,
+                counter = productList.Where(product2 => product.UnitPrice == product2.UnitPrice).Count()
+            });
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+
+        }
+
+        [Category("Parallel")]
+        [Title("produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura - WYKLAD")]
+        [Description("produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura - WYKLAD")]
+        public void Linq135()
+        {
+            List<Product> productList = GetProductList();
+            Func<IEnumerable<dynamic>> func = () => productList
+                .AsParallel()
+                .Where(product => productList
+                   .Where(product2 => product2.ProductName == "Ikura")
+                   .Select(product2 => product2.UnitPrice).Contains(product.UnitPrice)
+                ).Select(product => product.ProductName);
+
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+
+        }
+
+        [Category("Parallel")]
+        [Title("produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura")]
+        [Description("produkty, których cena jednostkowa, jest równa cenie produktu o nazwie Ikura")]
+        public void Linq136()
+        {
+            List<Product> productList = GetProductList();
+            Func<IEnumerable<dynamic>> func = () =>
+            {
+                var ikuraPrice = productList.Where(product2 => product2.ProductName == "Ikura").Select(product2 => product2.UnitPrice).ToList();
+
+                return productList
+                    .Where(product => ikuraPrice.Contains(product.UnitPrice))
+                    .Select(product => product.ProductName);
+            };
+
+            double time = QuerySamples.Benchmark.getAverageTime(func);
+            Console.WriteLine("Time {0}", time);
+
+        }

@@ -1,0 +1,16 @@
+C:\Users\student\Documents\208301\C#\bin\Release\SampleQueries.exe
+C:\Users\student\Documents\208301\C#\bin\Release\SampleQueries.pdb
+C:\Users\student\Documents\208301\C#\obj\Release\SampleQueries.csprojResolveAssemblyReference.cache
+C:\Users\student\Documents\208301\C#\obj\Release\QuerySamples.Properties.Resources.resources
+C:\Users\student\Documents\208301\C#\obj\Release\SampleSupport.SampleForm.resources
+C:\Users\student\Documents\208301\C#\obj\Release\SampleQueries.csproj.GenerateResource.Cache
+C:\Users\student\Documents\208301\C#\obj\Release\SampleQueries.exe
+C:\Users\student\Documents\208301\C#\obj\Release\SampleQueries.pdb
+E:\studia\magisterskie_s2\LINQ\C#\obj\Release\SampleQueries.exe
+E:\studia\magisterskie_s2\LINQ\C#\obj\Release\SampleQueries.pdb
+E:\studia\magisterskie_s2\LINQ\C#\bin\Release\SampleQueries.exe
+E:\studia\magisterskie_s2\LINQ\C#\bin\Release\SampleQueries.pdb
+E:\studia\magisterskie_s2\LINQ\C#\obj\Release\SampleQueries.csprojResolveAssemblyReference.cache
+E:\studia\magisterskie_s2\LINQ\C#\obj\Release\QuerySamples.Properties.Resources.resources
+E:\studia\magisterskie_s2\LINQ\C#\obj\Release\SampleSupport.SampleForm.resources
+E:\studia\magisterskie_s2\LINQ\C#\obj\Release\SampleQueries.csproj.GenerateResource.Cache

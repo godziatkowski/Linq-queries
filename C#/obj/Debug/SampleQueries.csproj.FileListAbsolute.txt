@@ -1,0 +1,25 @@
+C:\Users\v-damdec\Downloads\Archived Samples Gallery\CSharpSamples\CSharpSamples\LinqSamples\SampleQueries\bin\Debug\SampleQueries.exe
+C:\Users\v-damdec\Downloads\Archived Samples Gallery\CSharpSamples\CSharpSamples\LinqSamples\SampleQueries\bin\Debug\SampleQueries.pdb
+C:\Users\v-damdec\Downloads\Archived Samples Gallery\CSharpSamples\CSharpSamples\LinqSamples\SampleQueries\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\v-damdec\Downloads\Archived Samples Gallery\CSharpSamples\CSharpSamples\LinqSamples\SampleQueries\obj\Debug\QuerySamples.Properties.Resources.resources
+C:\Users\v-damdec\Downloads\Archived Samples Gallery\CSharpSamples\CSharpSamples\LinqSamples\SampleQueries\obj\Debug\SampleSupport.SampleForm.resources
+C:\Users\v-damdec\Downloads\Archived Samples Gallery\CSharpSamples\CSharpSamples\LinqSamples\SampleQueries\obj\Debug\GenerateResource.read.1.tlog
+C:\Users\v-damdec\Downloads\Archived Samples Gallery\CSharpSamples\CSharpSamples\LinqSamples\SampleQueries\obj\Debug\GenerateResource.write.1.tlog
+C:\Users\v-damdec\Downloads\Archived Samples Gallery\CSharpSamples\CSharpSamples\LinqSamples\SampleQueries\obj\Debug\SampleQueries.exe
+C:\Users\v-damdec\Downloads\Archived Samples Gallery\CSharpSamples\CSharpSamples\LinqSamples\SampleQueries\obj\Debug\SampleQueries.pdb
+C:\Users\student\Documents\208301\C#\obj\Debug\SampleQueries.exe
+C:\Users\student\Documents\208301\C#\obj\Debug\SampleQueries.pdb
+C:\Users\student\Documents\208301\C#\obj\Debug\QuerySamples.Properties.Resources.resources
+C:\Users\student\Documents\208301\C#\obj\Debug\SampleSupport.SampleForm.resources
+C:\Users\student\Documents\208301\C#\obj\Debug\SampleQueries.csproj.GenerateResource.Cache
+C:\Users\student\Documents\208301\C#\bin\Debug\SampleQueries.exe
+C:\Users\student\Documents\208301\C#\bin\Debug\SampleQueries.pdb
+C:\Users\student\Documents\208301\C#\obj\Debug\SampleQueries.csprojResolveAssemblyReference.cache
+E:\studia\magisterskie_s2\LINQ\C#\obj\Debug\SampleQueries.exe
+E:\studia\magisterskie_s2\LINQ\C#\obj\Debug\SampleQueries.pdb
+E:\studia\magisterskie_s2\LINQ\C#\bin\Debug\SampleQueries.exe
+E:\studia\magisterskie_s2\LINQ\C#\bin\Debug\SampleQueries.pdb
+E:\studia\magisterskie_s2\LINQ\C#\obj\Debug\SampleQueries.csprojResolveAssemblyReference.cache
+E:\studia\magisterskie_s2\LINQ\C#\obj\Debug\QuerySamples.Properties.Resources.resources
+E:\studia\magisterskie_s2\LINQ\C#\obj\Debug\SampleSupport.SampleForm.resources
+E:\studia\magisterskie_s2\LINQ\C#\obj\Debug\SampleQueries.csproj.GenerateResource.Cache
